@@ -1,11 +1,20 @@
-package com.spring.boot.levelup.payment.payment;
+package com.spring.boot.levelup.payment.entity.payment;
 
-
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Table(name = "payments")
+
 public class Payment {
 
     @Id
@@ -16,7 +25,8 @@ public class Payment {
     private Long orderId;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(nullable = false,columnDefinition = "payment_provider")
     private PaymentProvider provider;
 
     @Column(name = "provider_order_id")
@@ -35,27 +45,33 @@ public class Payment {
     private String currency;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(nullable = false,columnDefinition = "payment_status")
     private PaymentStatus status;
 
-    @Column(columnDefinition = "jsonb")
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "raw_response", columnDefinition = "jsonb")
     private String rawResponse;
 
     private String failureReason;
 
-    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    protected Payment() {}
+    protected Payment() {
+    }
 
     public Payment(Long orderId,
-                   PaymentProvider provider,
-                   String idempotencyKey,
-                   Long amount,
-                   String currency) {
+            PaymentProvider provider,
+            String idempotencyKey,
+            Long amount,
+            String currency) {
 
         this.orderId = orderId;
         this.provider = provider;
@@ -86,7 +102,15 @@ public class Payment {
 
     /* ===== Getters ===== */
 
-    public Long getId() { return id; }
-    public Long getOrderId() { return orderId; }
-    public PaymentStatus getStatus() { return status; }
+    public Long getId() {
+        return id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
 }

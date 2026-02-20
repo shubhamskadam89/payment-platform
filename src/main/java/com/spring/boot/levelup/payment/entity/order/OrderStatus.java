@@ -1,5 +1,4 @@
-package com.spring.boot.levelup.payment.order;
-
+package com.spring.boot.levelup.payment.entity.order;
 
 public enum OrderStatus {
     CREATED,

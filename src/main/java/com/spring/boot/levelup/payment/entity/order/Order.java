@@ -1,6 +1,11 @@
-package com.spring.boot.levelup.payment.order;
+package com.spring.boot.levelup.payment.entity.order;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,7 +29,8 @@ public class Order {
     private String currency;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(nullable = false,columnDefinition = "order_status")
     private OrderStatus status;
 
     @Version
@@ -33,10 +39,12 @@ public class Order {
 
     private String description;
 
-    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     /* ===== Constructors ===== */
@@ -78,11 +86,31 @@ public class Order {
 
     /* ===== Getters ===== */
 
-    public Long getId() { return id; }
-    public String getOrderReference() { return orderReference; }
-    public Long getUserId() { return userId; }
-    public Long getAmount() { return amount; }
-    public String getCurrency() { return currency; }
-    public OrderStatus getStatus() { return status; }
-    public Integer getVersion() { return version; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getOrderReference() {
+        return orderReference;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
 }
