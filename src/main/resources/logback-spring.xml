@@ -3,14 +3,14 @@
 
     <property name="LOG_PATH" value="logs"/>
 
-    <!-- Console Appender -->
+    <!-- ================= CONSOLE ================= -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Application File Appender -->
+    <!-- ================= APPLICATION FILE ================= -->
     <appender name="APP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/application.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -22,7 +22,7 @@
         </encoder>
     </appender>
 
-    <!-- Error File -->
+    <!-- ================= ERROR FILE ================= -->
     <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/error.log</file>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -37,7 +37,7 @@
         </encoder>
     </appender>
 
-    <!-- Payment Specific Logs -->
+    <!-- ================= PAYMENT FILE ================= -->
     <appender name="PAYMENT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/payment.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -49,13 +49,13 @@
         </encoder>
     </appender>
 
-    <!-- Package Level Logger for Payment -->
-    <logger name="com.spring.boot.payment" level="INFO" additivity="false">
+    <!-- ================= PAYMENT PACKAGE LOGGER ================= -->
+    <logger name="com.spring.boot.levelup.payment" level="INFO" additivity="false">
         <appender-ref ref="PAYMENT_FILE"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <!-- Root Logger -->
+    <!-- ================= ROOT LOGGER ================= -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="APP_FILE"/>

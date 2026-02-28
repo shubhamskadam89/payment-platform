@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     open-in-view: false
     properties:
@@ -15,15 +15,16 @@ spring:
         format_sql: true
         jdbc:
           time_zone: UTC
+
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
   transaction:
     default-timeout: 30
 
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
+#logging:
+#  level:
+##    org.hibernate.SQL: DEBUG
+##    org.hibernate.orm.jdbc.bind: TRACE
 
 management:
   endpoints:
